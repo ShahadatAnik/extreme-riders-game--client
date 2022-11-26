@@ -18,12 +18,12 @@ function App() {
   const [yoffset, setYoffset] = useState(700);
   const [xoffset2, setXoffset2] = useState(900);
   const [yoffset2, setYoffset2] = useState(700);
-  const [delta, setDelta] = useState(10);
+  const [delta, setDelta] = useState(20);
   const [car1, setCar1] = useState(car1_up);
   const [car2, setCar2] = useState(car2_up);
 
   useEffect(() => {
-    const handleEsc = (event) => {
+    const handleCar1 = (event) => {
       if (event.keyCode === 87) {
         setCar1(car1_up);
         setYoffset(yoffset-delta);
@@ -40,7 +40,8 @@ function App() {
         setCar1(car1_right);
         setXoffset(xoffset+delta);
       }
-
+    };
+    const handleCar2 = (event) => {
       if (event.keyCode === 38) {
         setCar2(car2_up);
         setYoffset2(yoffset2-delta);
@@ -58,10 +59,14 @@ function App() {
         setXoffset2(xoffset2+delta);
       }
     };
-    window.addEventListener('keydown', handleEsc);
+
+    window.addEventListener('keydown', handleCar1);
+    window.addEventListener('keydown', handleCar2);
     return () => {
-      window.removeEventListener('keydown', handleEsc);
+      window.removeEventListener('keydown', handleCar1);
+      window.removeEventListener('keydown', handleCar2);
     };
+
   }, [xoffset, yoffset, xoffset2, yoffset2]);
 
   
