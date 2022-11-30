@@ -2,6 +2,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme/index';
 import { ColorModeSwitcher } from './theme/ColorModeSwitcher';
 import React, { useEffect, useState } from "react";
+import Axios from 'axios'
+
 import car1_up from './asset/car1up.png';
 import car1_down from './asset/car1down.png';
 import car1_left from './asset/car1left.png';
@@ -21,24 +23,35 @@ function App() {
   const [delta, setDelta] = useState(20);
   const [car1, setCar1] = useState(car1_up);
   const [car2, setCar2] = useState(car2_up);
+  const [car1_axis, setCar1_axis] = useState();
 
   useEffect(() => {
+    fetch('http://localhost:3001/api/get_car_1/')
+    .then((resp) => resp.json())
+    .then((resp) => console.log(resp))
+    .catch((error) => console.log(error));
+
+    //console.log(car1_axis)
     const handleCar1 = (event) => {
       if (event.keyCode === 87) {
         setCar1(car1_up);
         setYoffset(yoffset-delta);
+        update_car_1();
       }
       if (event.keyCode === 65) {
         setCar1(car1_left);
         setXoffset(xoffset-delta);
+        update_car_1();
       }
       if (event.keyCode === 83) {
         setCar1(car1_down);
         setYoffset(yoffset+delta);
+        update_car_1();
       }
       if (event.keyCode === 68) {
         setCar1(car1_right);
         setXoffset(xoffset+delta);
+        update_car_1();
       }
     };
     const handleCar2 = (event) => {
@@ -69,6 +82,12 @@ function App() {
 
   }, [xoffset, yoffset, xoffset2, yoffset2]);
 
+  const update_car_1 = () =>{
+    Axios.put("http://localhost:3001/api/update_car_1/", {
+      x_axis: xoffset,
+      y_axis: yoffset,
+    });
+  };
   
   return (
     <ChakraProvider theme={theme}>
