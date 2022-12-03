@@ -12,10 +12,12 @@ import car2_up from './asset/car2up.png';
 import car2_down from './asset/car2down.png';
 import car2_left from './asset/car2left.png';
 import car2_right from './asset/car2right.png';
+import { useMemo } from 'react';
 
 
 function App() {
 
+  
   const [xoffset, setXoffset] = useState(500);
   const [yoffset, setYoffset] = useState(700);
   const [xoffset2, setXoffset2] = useState(900);
@@ -25,30 +27,36 @@ function App() {
   const [car2, setCar2] = useState(car2_up);
   const [car1_axis, setCar1_axis] = useState();
 
-  useEffect(() => {
-    fetch('http://localhost:3001/api/get_car_1/')
-    .then((resp) => resp.json())
-    .then((resp) => console.log(resp))
-    .catch((error) => console.log(error));
 
+    // fetch('http://localhost:3001/api/get_car_1/')
+    // .then((resp) => resp.json())
+    // .then((resp) => setXoffset((resp[0]?.x_axis))).then((resp) => setYoffset((resp[0]?.y_axis)))
+    // .catch((error) => console.log(error));
+
+
+  useEffect(() => {
     //console.log(car1_axis)
     const handleCar1 = (event) => {
       if (event.keyCode === 87) {
+        //W
         setCar1(car1_up);
         setYoffset(yoffset-delta);
         update_car_1();
       }
       if (event.keyCode === 65) {
+        //A
         setCar1(car1_left);
         setXoffset(xoffset-delta);
         update_car_1();
       }
       if (event.keyCode === 83) {
+        //S
         setCar1(car1_down);
         setYoffset(yoffset+delta);
         update_car_1();
       }
       if (event.keyCode === 68) {
+        //D
         setCar1(car1_right);
         setXoffset(xoffset+delta);
         update_car_1();
@@ -80,16 +88,21 @@ function App() {
       window.removeEventListener('keydown', handleCar2);
     };
 
+    
+
   }, [xoffset, yoffset, xoffset2, yoffset2]);
 
   const update_car_1 = () =>{
-    
     Axios.post("http://localhost:3001/api/update_car_1/", {
       x_axis: xoffset,
       y_axis: yoffset,
     });
   };
-  
+
+  const get_car_1 = () => {
+    
+  }
+
   return (
     <ChakraProvider theme={theme}>
       <ColorModeSwitcher
@@ -101,7 +114,6 @@ function App() {
           zIndex: '9999',
         }}
       />
-     <h1>extreme riders</h1>
 
      
      <h2
