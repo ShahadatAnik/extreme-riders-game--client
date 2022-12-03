@@ -83,7 +83,8 @@ function App() {
   }, [xoffset, yoffset, xoffset2, yoffset2]);
 
   const update_car_1 = () =>{
-    Axios.put("http://localhost:3001/api/update_car_1/", {
+    
+    Axios.post("http://localhost:3001/api/update_car_1/", {
       x_axis: xoffset,
       y_axis: yoffset,
     });
