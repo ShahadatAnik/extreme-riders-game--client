@@ -17,24 +17,52 @@ import { useMemo } from 'react';
 
 function App() {
 
-  
-  const [xoffset, setXoffset] = useState(500);
-  const [yoffset, setYoffset] = useState(700);
+  const [initialXoffset, setInnitialXoffset] = useState()
+  const [initialYoffset, setInnitialYoffset] = useState()
+
+  const [initialXoffset2, setInnitialXoffset2] = useState()
+  const [initialYoffset2, setInnitialYoffset2] = useState()
+
+    fetch('http://localhost:3001/api/get_car_1/')
+    .then((resp) => resp.json())
+    .then((resp) => (setInnitialXoffset(resp[0]?.x_axis), setInnitialYoffset(resp[0]?.y_axis)))
+    .catch((error) => console.log(error));
+
+    fetch('http://localhost:3001/api/get_car_2/')
+    .then((resp) => resp.json())
+    .then((resp) => (setInnitialXoffset2(resp[0]?.x_axis), setInnitialYoffset2(resp[0]?.y_axis)))
+    .catch((error) => console.log(error));
+
+
+  const [xoffset, setXoffset] = useState(0);
+  const [yoffset, setYoffset] = useState(0);
   const [xoffset2, setXoffset2] = useState(900);
   const [yoffset2, setYoffset2] = useState(700);
   const [delta, setDelta] = useState(20);
   const [car1, setCar1] = useState(car1_up);
   const [car2, setCar2] = useState(car2_up);
   const [car1_axis, setCar1_axis] = useState();
+  const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
 
+  if(initialXoffset!= undefined){
+    if(count==0 ){
+      setXoffset(initialXoffset)
+      setYoffset(initialYoffset)
+      setCount(1)
+    }
+  }
 
-    // fetch('http://localhost:3001/api/get_car_1/')
-    // .then((resp) => resp.json())
-    // .then((resp) => setXoffset((resp[0]?.x_axis))).then((resp) => setYoffset((resp[0]?.y_axis)))
-    // .catch((error) => console.log(error));
-
+  if(initialXoffset2!= undefined){
+    if(count2==0 ){
+      setXoffset2(initialXoffset2)
+      setYoffset2(initialYoffset2)
+      setCount2(1)
+    }
+  }
 
   useEffect(() => {
+    
     //console.log(car1_axis)
     const handleCar1 = (event) => {
       if (event.keyCode === 87) {
@@ -66,18 +94,22 @@ function App() {
       if (event.keyCode === 38) {
         setCar2(car2_up);
         setYoffset2(yoffset2-delta);
+        update_car_2();
       }
       if (event.keyCode === 37) {
         setCar2(car2_left);
         setXoffset2(xoffset2-delta);
+        update_car_2();
       }
       if (event.keyCode === 40) {
         setCar2(car2_down);
         setYoffset2(yoffset2+delta);
+        update_car_2();
       }
       if (event.keyCode === 39) {
         setCar2(car2_right);
         setXoffset2(xoffset2+delta);
+        update_car_2();
       }
     };
 
@@ -99,9 +131,12 @@ function App() {
     });
   };
 
-  const get_car_1 = () => {
-    
-  }
+  const update_car_2 = () =>{
+    Axios.post("http://localhost:3001/api/update_car_2/", {
+      x_axis: xoffset2,
+      y_axis: yoffset2,
+    });
+  };
 
   return (
     <ChakraProvider theme={theme}>
