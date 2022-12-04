@@ -20,9 +20,17 @@ function App() {
   const [initialXoffset, setInnitialXoffset] = useState()
   const [initialYoffset, setInnitialYoffset] = useState()
 
+  const [initialXoffset2, setInnitialXoffset2] = useState()
+  const [initialYoffset2, setInnitialYoffset2] = useState()
+
     fetch('http://localhost:3001/api/get_car_1/')
     .then((resp) => resp.json())
     .then((resp) => (setInnitialXoffset(resp[0]?.x_axis), setInnitialYoffset(resp[0]?.y_axis)))
+    .catch((error) => console.log(error));
+
+    fetch('http://localhost:3001/api/get_car_2/')
+    .then((resp) => resp.json())
+    .then((resp) => (setInnitialXoffset2(resp[0]?.x_axis), setInnitialYoffset2(resp[0]?.y_axis)))
     .catch((error) => console.log(error));
 
 
@@ -35,12 +43,21 @@ function App() {
   const [car2, setCar2] = useState(car2_up);
   const [car1_axis, setCar1_axis] = useState();
   const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
 
   if(initialXoffset!= undefined){
     if(count==0 ){
       setXoffset(initialXoffset)
       setYoffset(initialYoffset)
       setCount(1)
+    }
+  }
+
+  if(initialXoffset2!= undefined){
+    if(count2==0 ){
+      setXoffset2(initialXoffset2)
+      setYoffset2(initialYoffset2)
+      setCount2(1)
     }
   }
 
@@ -77,18 +94,22 @@ function App() {
       if (event.keyCode === 38) {
         setCar2(car2_up);
         setYoffset2(yoffset2-delta);
+        update_car_2();
       }
       if (event.keyCode === 37) {
         setCar2(car2_left);
         setXoffset2(xoffset2-delta);
+        update_car_2();
       }
       if (event.keyCode === 40) {
         setCar2(car2_down);
         setYoffset2(yoffset2+delta);
+        update_car_2();
       }
       if (event.keyCode === 39) {
         setCar2(car2_right);
         setXoffset2(xoffset2+delta);
+        update_car_2();
       }
     };
 
@@ -107,6 +128,13 @@ function App() {
     Axios.post("http://localhost:3001/api/update_car_1/", {
       x_axis: xoffset,
       y_axis: yoffset,
+    });
+  };
+
+  const update_car_2 = () =>{
+    Axios.post("http://localhost:3001/api/update_car_2/", {
+      x_axis: xoffset2,
+      y_axis: yoffset2,
     });
   };
 
