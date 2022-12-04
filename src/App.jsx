@@ -17,24 +17,35 @@ import { useMemo } from 'react';
 
 function App() {
 
-  
-  const [xoffset, setXoffset] = useState(500);
-  const [yoffset, setYoffset] = useState(700);
+  const [initialXoffset, setInnitialXoffset] = useState()
+  const [initialYoffset, setInnitialYoffset] = useState()
+
+    fetch('http://localhost:3001/api/get_car_1/')
+    .then((resp) => resp.json())
+    .then((resp) => (setInnitialXoffset(resp[0]?.x_axis), setInnitialYoffset(resp[0]?.y_axis)))
+    .catch((error) => console.log(error));
+
+
+  const [xoffset, setXoffset] = useState(0);
+  const [yoffset, setYoffset] = useState(0);
   const [xoffset2, setXoffset2] = useState(900);
   const [yoffset2, setYoffset2] = useState(700);
   const [delta, setDelta] = useState(20);
   const [car1, setCar1] = useState(car1_up);
   const [car2, setCar2] = useState(car2_up);
   const [car1_axis, setCar1_axis] = useState();
+  const [count, setCount] = useState(0);
 
-
-    // fetch('http://localhost:3001/api/get_car_1/')
-    // .then((resp) => resp.json())
-    // .then((resp) => setXoffset((resp[0]?.x_axis))).then((resp) => setYoffset((resp[0]?.y_axis)))
-    // .catch((error) => console.log(error));
-
+  if(initialXoffset!= undefined){
+    if(count==0 ){
+      setXoffset(initialXoffset)
+      setYoffset(initialYoffset)
+      setCount(1)
+    }
+  }
 
   useEffect(() => {
+    
     //console.log(car1_axis)
     const handleCar1 = (event) => {
       if (event.keyCode === 87) {
@@ -98,10 +109,6 @@ function App() {
       y_axis: yoffset,
     });
   };
-
-  const get_car_1 = () => {
-    
-  }
 
   return (
     <ChakraProvider theme={theme}>
