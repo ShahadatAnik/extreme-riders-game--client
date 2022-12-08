@@ -12,6 +12,7 @@ import car2_up from './asset/car2up.png';
 import car2_down from './asset/car2down.png';
 import car2_left from './asset/car2left.png';
 import car2_right from './asset/car2right.png';
+import coin_png from './asset/coin.png';
 import { useMemo } from 'react';
 
 
@@ -41,9 +42,14 @@ function App() {
   const [delta, setDelta] = useState(20);
   const [car1, setCar1] = useState(car1_up);
   const [car2, setCar2] = useState(car2_up);
+  const [coin, setCoin] = useState(coin_png);
+  const [coin_x, setCoin_x] = useState(500);
+  const [coin_y, setCoin_y] = useState(500);
   const [car1_axis, setCar1_axis] = useState();
   const [count, setCount] = useState(0);
   const [count2, setCount2] = useState(0);
+  const [car_1_point, setCar_1_point] = useState(0);
+  const [car_2_point, setCar_2_point] = useState(0);
 
   if(initialXoffset!= undefined){
     if(count==0 ){
@@ -62,6 +68,30 @@ function App() {
   }
 
   useEffect(() => {
+    console.log("xoffset: ", xoffset)
+    console.log("yoffset: ", yoffset)
+    console.log("coinx: ", coin_x)
+    console.log("coiny: ", coin_y)
+
+    for(var x=0; x<150; x=x+1){
+      for(var y=0; y<150; y=y+1){
+        if((xoffset+x)==coin_x && (yoffset+y)==coin_y){
+          setCoin_x(Math.floor(Math.random() * 1000));
+          setCoin_y(Math.floor(Math.random() * 900));
+          setCar_1_point(car_1_point+1);
+        }
+      }
+    }
+
+    for(var x=0; x<150; x=x+1){
+      for(var y=0; y<150; y=y+1){
+        if((xoffset2+x)==coin_x && (yoffset2+y)==coin_y){
+          setCoin_x(Math.floor(Math.random() * 1000));
+          setCoin_y(Math.floor(Math.random() * 900));
+          setCar_2_point(car_2_point+1);
+        }
+      }
+    }
     
     //console.log(car1_axis)
     const handleCar1 = (event) => {
@@ -120,8 +150,6 @@ function App() {
       window.removeEventListener('keydown', handleCar2);
     };
 
-    
-
   }, [xoffset, yoffset, xoffset2, yoffset2]);
 
   const update_car_1 = () =>{
@@ -149,8 +177,8 @@ function App() {
           zIndex: '9999',
         }}
       />
-
-     
+      <h1>Car 1 point: {car_1_point}</h1>
+      <h1>Car 2 point: {car_2_point}</h1>
      <h2
 		style={{
 			position: "absolute",
@@ -169,6 +197,16 @@ function App() {
 		}}
 		>
 		<img src={car2} height="250" width="250" alt='car_1'/>
+		</h2>
+
+    <h2
+		style={{
+			position: "absolute",
+			left: `${coin_x}px`,
+			top: `${coin_y}px`,
+		}}
+		>
+		<img src={coin} height="100" width="100" alt='coin'/>
 		</h2>
     </ChakraProvider>
   );
