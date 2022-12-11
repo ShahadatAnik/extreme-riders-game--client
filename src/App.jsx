@@ -68,10 +68,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log("xoffset: ", xoffset)
-    console.log("yoffset: ", yoffset)
-    console.log("coinx: ", coin_x)
-    console.log("coiny: ", coin_y)
 
     for(var x=0; x<150; x=x+1){
       for(var y=0; y<150; y=y+1){
@@ -83,15 +79,7 @@ function App() {
       }
     }
 
-    for(var x=0; x<150; x=x+1){
-      for(var y=0; y<150; y=y+1){
-        if((xoffset2+x)==coin_x && (yoffset2+y)==coin_y){
-          setCoin_x(Math.floor(Math.random() * 1000));
-          setCoin_y(Math.floor(Math.random() * 900));
-          setCar_2_point(car_2_point+1);
-        }
-      }
-    }
+   
     
     //console.log(car1_axis)
     const handleCar1 = (event) => {
@@ -120,6 +108,27 @@ function App() {
         update_car_1();
       }
     };
+    
+
+    window.addEventListener('keydown', handleCar1);
+    return () => {
+      window.removeEventListener('keydown', handleCar1);
+    };
+
+  }, [xoffset, yoffset]);
+
+
+  useEffect(() => {
+    for(var x=0; x<150; x=x+1){
+      for(var y=0; y<150; y=y+1){
+        if((xoffset2+x)==coin_x && (yoffset2+y)==coin_y){
+          setCoin_x(Math.floor(Math.random() * 1000));
+          setCoin_y(Math.floor(Math.random() * 900));
+          setCar_2_point(car_2_point+1);
+        }
+      }
+    }
+
     const handleCar2 = (event) => {
       if (event.keyCode === 38) {
         setCar2(car2_up);
@@ -143,14 +152,12 @@ function App() {
       }
     };
 
-    window.addEventListener('keydown', handleCar1);
+    
     window.addEventListener('keydown', handleCar2);
     return () => {
-      window.removeEventListener('keydown', handleCar1);
       window.removeEventListener('keydown', handleCar2);
     };
-
-  }, [xoffset, yoffset, xoffset2, yoffset2]);
+  }, [xoffset2, yoffset2]);
 
   const update_car_1 = () =>{
     Axios.post("http://localhost:3001/api/update_car_1/", {
