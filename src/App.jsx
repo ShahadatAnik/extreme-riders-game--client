@@ -79,7 +79,6 @@ function App() {
       }
     }
 
-   
     
     //console.log(car1_axis)
     const handleCar1 = (event) => {
