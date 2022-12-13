@@ -54,6 +54,7 @@ function App() {
   const [time_minute, setTime_minute] = useState(0);
   const [time_pause, setTime_pause] = useState(false);
   const [Game_over, setGame_over] = useState(false);
+  const [timeToPlay, setTimeToPlay] = useState(2);
 
   if(initialXoffset!= undefined){
     if(count==0 ){
@@ -216,7 +217,7 @@ function App() {
         setTime_second(0)
        }
     }
-    if(time_minute==2){
+    if(time_minute==timeToPlay && time_second==0){
       setGame_over(true)
       setTime_pause(true)
     }
