@@ -89,6 +89,9 @@ function App() {
           setYoffset(yoffset-delta);
           update_car_1();
         }
+        else{
+          setYoffset(window.innerHeight-250);
+        }
       }
       if (event.keyCode === 65) {
         //A
@@ -96,6 +99,9 @@ function App() {
           setCar1(car1_left);
           setXoffset(xoffset-delta);
           update_car_1();
+        }
+        else{
+          setXoffset(window.innerWidth-250);
         }
       }
       if (event.keyCode === 83) {
@@ -105,6 +111,9 @@ function App() {
           setYoffset(yoffset+delta);
           update_car_1();
         }
+        else{
+          setYoffset(0);
+        }
       }
       if (event.keyCode === 68) {
         //D
@@ -112,6 +121,9 @@ function App() {
           setCar1(car1_right);
           setXoffset(xoffset+delta);
           update_car_1();
+        }
+        else{
+          setXoffset(0);
         }
       }
     };
@@ -138,7 +150,10 @@ function App() {
 
     const handleCar2 = (event) => {
       if (event.keyCode === 38) {
-        if(yoffset2>0){
+        if(yoffset2<0){
+          setYoffset2((window.innerHeight-250));
+        }
+        else{
           setCar2(car2_up);
           setYoffset2(yoffset2-delta);
           update_car_2();
@@ -150,6 +165,9 @@ function App() {
           setXoffset2(xoffset2-delta);
           update_car_2();
         }
+        else{
+          setXoffset2((window.innerWidth-250));
+        }
       }
       if (event.keyCode === 40) {
         if(yoffset2<window.innerHeight-250){
@@ -157,12 +175,18 @@ function App() {
           setYoffset2(yoffset2+delta);
           update_car_2();
         }
+        else{
+          setYoffset2(0);
+        }
       }
       if (event.keyCode === 39) {
         if(xoffset2<window.innerWidth-250){
           setCar2(car2_right);
           setXoffset2(xoffset2+delta);
           update_car_2();
+        }
+        else{
+          setXoffset2(0);
         }
       }
     };
