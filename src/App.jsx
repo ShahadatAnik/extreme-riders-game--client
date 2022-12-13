@@ -78,6 +78,7 @@ function App() {
         }
       }
     }
+
    
     
     //console.log(car1_axis)
