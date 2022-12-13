@@ -50,6 +50,10 @@ function App() {
   const [count2, setCount2] = useState(0);
   const [car_1_point, setCar_1_point] = useState(0);
   const [car_2_point, setCar_2_point] = useState(0);
+  const [time_second, setTime_second] = useState(0);
+  const [time_minute, setTime_minute] = useState(0);
+  const [time_pause, setTime_pause] = useState(false);
+  const [Game_over, setGame_over] = useState(false);
 
   if(initialXoffset!= undefined){
     if(count==0 ){
@@ -83,6 +87,7 @@ function App() {
     
     //console.log(car1_axis)
     const handleCar1 = (event) => {
+      if (Game_over==false){
       if (event.keyCode === 87) {
         //W
         if(yoffset>0){
@@ -127,6 +132,7 @@ function App() {
           setXoffset(0);
         }
       }
+    }
     };
     
 
@@ -135,7 +141,7 @@ function App() {
       window.removeEventListener('keydown', handleCar1);
     };
 
-  }, [xoffset, yoffset]);
+  }, [xoffset, yoffset, Game_over]);
 
 
   useEffect(() => {
@@ -150,6 +156,7 @@ function App() {
     }
 
     const handleCar2 = (event) => {
+      if (Game_over==false){
       if (event.keyCode === 38) {
         if(yoffset2<0){
           setYoffset2((window.innerHeight-250));
@@ -190,14 +197,30 @@ function App() {
           setXoffset2(0);
         }
       }
+    }
     };
 
-    
     window.addEventListener('keydown', handleCar2);
     return () => {
       window.removeEventListener('keydown', handleCar2);
     };
-  }, [xoffset2, yoffset2]);
+  }, [xoffset2, yoffset2, Game_over]);
+
+  useEffect (() =>{
+    if(time_pause === false){
+      setTimeout(()=>{
+        setTime_second(time_second+1)
+       }, 1000)
+       if(time_second === 60){
+        setTime_minute(time_minute+1)
+        setTime_second(0)
+       }
+    }
+    if(time_minute==2){
+      setGame_over(true)
+      setTime_pause(true)
+    }
+  }, [time_second, time_minute, time_pause]);
 
   const update_car_1 = () =>{
     Axios.post("http://localhost:3001/api/update_car_1/", {
@@ -213,6 +236,15 @@ function App() {
     });
   };
 
+  const reset = () =>{
+    setGame_over(false)
+    setTime_pause(false)
+    setTime_minute(0)
+    setTime_second(0)
+    setCar_1_point(0)
+    setCar_2_point(0)
+  };
+
   return (
     <ChakraProvider theme={theme}>
       <ColorModeSwitcher
@@ -226,6 +258,8 @@ function App() {
       />
       <h1>Car 1 point: {car_1_point}</h1>
       <h1>Car 2 point: {car_2_point}</h1>
+      <h1>Time: {time_minute}:{time_second}</h1>
+      <button onClick={(e)=>reset()}>Reset</button>
      <h2
 		style={{
 			position: "absolute",
@@ -235,7 +269,7 @@ function App() {
 		>
 		<img src={car1} height="250" width="250" alt='car_1'/>
 		</h2>
-
+    
     <h2
 		style={{
 			position: "absolute",
