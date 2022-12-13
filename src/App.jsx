@@ -69,42 +69,63 @@ function App() {
 
   useEffect(() => {
 
-    for(var x=0; x<150; x=x+1){
-      for(var y=0; y<150; y=y+1){
+    for(var x=0; x<200; x=x+1){
+      for(var y=0; y<200; y=y+1){
         if((xoffset+x)==coin_x && (yoffset+y)==coin_y){
-          setCoin_x(Math.floor(Math.random() * 1000));
-          setCoin_y(Math.floor(Math.random() * 900));
+          setCoin_x(Math.floor(Math.random() * (window.innerWidth-150)));
+          setCoin_y(Math.floor(Math.random() * (window.innerHeight-150)));
           setCar_1_point(car_1_point+1);
         }
       }
     }
 
+   
     
     //console.log(car1_axis)
     const handleCar1 = (event) => {
       if (event.keyCode === 87) {
         //W
-        setCar1(car1_up);
-        setYoffset(yoffset-delta);
-        update_car_1();
+        if(yoffset>0){
+          setCar1(car1_up);
+          setYoffset(yoffset-delta);
+          update_car_1();
+        }
+        else{
+          setYoffset(window.innerHeight-250);
+        }
       }
       if (event.keyCode === 65) {
         //A
-        setCar1(car1_left);
-        setXoffset(xoffset-delta);
-        update_car_1();
+        if(xoffset>0){
+          setCar1(car1_left);
+          setXoffset(xoffset-delta);
+          update_car_1();
+        }
+        else{
+          setXoffset(window.innerWidth-250);
+        }
       }
       if (event.keyCode === 83) {
         //S
-        setCar1(car1_down);
-        setYoffset(yoffset+delta);
-        update_car_1();
+        if(yoffset<window.innerHeight-250){
+          setCar1(car1_down);
+          setYoffset(yoffset+delta);
+          update_car_1();
+        }
+        else{
+          setYoffset(0);
+        }
       }
       if (event.keyCode === 68) {
         //D
-        setCar1(car1_right);
-        setXoffset(xoffset+delta);
-        update_car_1();
+        if(xoffset<window.innerWidth-250){
+          setCar1(car1_right);
+          setXoffset(xoffset+delta);
+          update_car_1();
+        }
+        else{
+          setXoffset(0);
+        }
       }
     };
     
@@ -118,11 +139,11 @@ function App() {
 
 
   useEffect(() => {
-    for(var x=0; x<150; x=x+1){
-      for(var y=0; y<150; y=y+1){
+    for(var x=0; x<200; x=x+1){
+      for(var y=0; y<200; y=y+1){
         if((xoffset2+x)==coin_x && (yoffset2+y)==coin_y){
-          setCoin_x(Math.floor(Math.random() * 1000));
-          setCoin_y(Math.floor(Math.random() * 900));
+          setCoin_x(Math.floor(Math.random() * (window.innerWidth-150)));
+          setCoin_y(Math.floor(Math.random() * (window.innerHeight-150)));
           setCar_2_point(car_2_point+1);
         }
       }
@@ -130,24 +151,44 @@ function App() {
 
     const handleCar2 = (event) => {
       if (event.keyCode === 38) {
-        setCar2(car2_up);
-        setYoffset2(yoffset2-delta);
-        update_car_2();
+        if(yoffset2<0){
+          setYoffset2((window.innerHeight-250));
+        }
+        else{
+          setCar2(car2_up);
+          setYoffset2(yoffset2-delta);
+          update_car_2();
+        }
       }
       if (event.keyCode === 37) {
-        setCar2(car2_left);
-        setXoffset2(xoffset2-delta);
-        update_car_2();
+        if(xoffset2>0){
+          setCar2(car2_left);
+          setXoffset2(xoffset2-delta);
+          update_car_2();
+        }
+        else{
+          setXoffset2((window.innerWidth-250));
+        }
       }
       if (event.keyCode === 40) {
-        setCar2(car2_down);
-        setYoffset2(yoffset2+delta);
-        update_car_2();
+        if(yoffset2<window.innerHeight-250){
+          setCar2(car2_down);
+          setYoffset2(yoffset2+delta);
+          update_car_2();
+        }
+        else{
+          setYoffset2(0);
+        }
       }
       if (event.keyCode === 39) {
-        setCar2(car2_right);
-        setXoffset2(xoffset2+delta);
-        update_car_2();
+        if(xoffset2<window.innerWidth-250){
+          setCar2(car2_right);
+          setXoffset2(xoffset2+delta);
+          update_car_2();
+        }
+        else{
+          setXoffset2(0);
+        }
       }
     };
 
