@@ -220,6 +220,15 @@ function App() {
     if(time_minute==timeToPlay && time_second==0){
       setGame_over(true)
       setTime_pause(true)
+      if (car_1_point > car_2_point){
+        console.log("Car 1 Winner")
+      }
+      else if (car_1_point == car_2_point){
+        console.log("Draw")
+      }
+      else{
+        console.log("Car 2 Winner")
+      }
     }
   }, [time_second, time_minute, time_pause]);
 
