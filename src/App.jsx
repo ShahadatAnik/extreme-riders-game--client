@@ -1,4 +1,7 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription, } from '@chakra-ui/react';
 import theme from './theme/index';
 import { ColorModeSwitcher } from './theme/ColorModeSwitcher';
 import React, { useEffect, useState } from "react";
@@ -14,6 +17,7 @@ import car2_left from './asset/car2left.png';
 import car2_right from './asset/car2right.png';
 import coin_png from './asset/coin.png';
 import { useMemo } from 'react';
+
 
 
 function App() {
@@ -55,6 +59,8 @@ function App() {
   const [time_pause, setTime_pause] = useState(false);
   const [Game_over, setGame_over] = useState(false);
   const [timeToPlay, setTimeToPlay] = useState(2);
+  const [alert_show, setAlert_show] = useState(false);
+  const [alert_message, setAlert_message] = useState(" ");
 
   if(initialXoffset!= undefined){
     if(count==0 ){
@@ -211,7 +217,7 @@ function App() {
     if(time_pause === false){
       setTimeout(()=>{
         setTime_second(time_second+1)
-       }, 1000)
+       }, 100)
        if(time_second === 60){
         setTime_minute(time_minute+1)
         setTime_second(0)
@@ -220,6 +226,21 @@ function App() {
     if(time_minute==timeToPlay && time_second==0){
       setGame_over(true)
       setTime_pause(true)
+      if (car_1_point > car_2_point){
+        console.log("car 1 Winner")
+        setAlert_show(true)
+        setAlert_message("Car 1 Winner")
+      }
+      else if (car_1_point == car_2_point){
+        console.log("Draw")
+        setAlert_show(true)
+        setAlert_message("Draw")
+      }
+      else{
+        console.log("Car 2 Winner")
+        setAlert_show(true)
+        setAlert_message("Car 2 Winner")
+      }
     }
   }, [time_second, time_minute, time_pause]);
 
@@ -238,6 +259,7 @@ function App() {
   };
 
   const reset = () =>{
+    setAlert_show(false)
     setGame_over(false)
     setTime_pause(false)
     setTime_minute(0)
@@ -257,6 +279,9 @@ function App() {
           zIndex: '9999',
         }}
       />
+      <Alert show={alert_show}>
+      <AlertTitle>{alert_message}</AlertTitle>
+    </Alert>
       <h1>Car 1 point: {car_1_point}</h1>
       <h1>Car 2 point: {car_2_point}</h1>
       <h1>Time: {time_minute}:{time_second}</h1>
@@ -290,6 +315,7 @@ function App() {
 		>
 		<img src={coin} height="100" width="100" alt='coin'/>
 		</h2>
+    
     </ChakraProvider>
   );
 }
