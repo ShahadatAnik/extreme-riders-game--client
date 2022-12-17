@@ -17,7 +17,6 @@ import car2_left from './asset/car2left.png';
 import car2_right from './asset/car2right.png';
 import coin_png from './asset/coin.png';
 import { useMemo } from 'react';
-{/*import Alert from '@mui/material/Alert';*/}
 
 
 
@@ -60,8 +59,8 @@ function App() {
   const [time_pause, setTime_pause] = useState(false);
   const [Game_over, setGame_over] = useState(false);
   const [timeToPlay, setTimeToPlay] = useState(2);
-  const [alert_show, setAlert_show] = useState(0);
-  const [alert_message, setAlert_message] = useState("Game Over");
+  const [alert_show, setAlert_show] = useState(false);
+  const [alert_message, setAlert_message] = useState(" ");
 
   if(initialXoffset!= undefined){
     if(count==0 ){
@@ -229,17 +228,17 @@ function App() {
       setTime_pause(true)
       if (car_1_point > car_2_point){
         console.log("car 1 Winner")
-        setAlert_show(1)
+        setAlert_show(true)
         setAlert_message("Car 1 Winner")
       }
       else if (car_1_point == car_2_point){
         console.log("Draw")
-        setAlert_show(1)
+        setAlert_show(true)
         setAlert_message("Draw")
       }
       else{
         console.log("Car 2 Winner")
-        setAlert_show(1)
+        setAlert_show(true)
         setAlert_message("Car 2 Winner")
       }
     }
@@ -280,6 +279,9 @@ function App() {
           zIndex: '9999',
         }}
       />
+      <Alert show={alert_show}>
+      <AlertTitle>{alert_message}</AlertTitle>
+    </Alert>
       <h1>Car 1 point: {car_1_point}</h1>
       <h1>Car 2 point: {car_2_point}</h1>
       <h1>Time: {time_minute}:{time_second}</h1>
@@ -313,10 +315,7 @@ function App() {
 		>
 		<img src={coin} height="100" width="100" alt='coin'/>
 		</h2>
-    <Alert show={alert_show}>
-      <AlertIcon />
-      <AlertTitle>{alert_message}</AlertTitle>
-    </Alert>
+    
     </ChakraProvider>
   );
 }
