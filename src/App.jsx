@@ -28,6 +28,12 @@ function App() {
   const [initialXoffset2, setInnitialXoffset2] = useState()
   const [initialYoffset2, setInnitialYoffset2] = useState()
 
+  const [initialCar1Point, setInnitialCar1Point] = useState()
+  const [initialCar2Point, setInnitialCar2Point] = useState()
+
+  const [initialCar1Win, setInnitialCar1Win] = useState()
+  const [initialCar2Win, setInnitialCar2Win] = useState()
+
     fetch('http://localhost:3001/api/get_car_1/')
     .then((resp) => resp.json())
     .then((resp) => (setInnitialXoffset(resp[0]?.x_axis), setInnitialYoffset(resp[0]?.y_axis)))
@@ -38,6 +44,15 @@ function App() {
     .then((resp) => (setInnitialXoffset2(resp[0]?.x_axis), setInnitialYoffset2(resp[0]?.y_axis)))
     .catch((error) => console.log(error));
 
+    fetch('http://localhost:3001/api/get_coins_earned/')
+    .then((resp) => resp.json())
+    .then((resp) => (setInnitialCar1Point(resp[0]?.player1_coins), setInnitialCar2Point(resp[0]?.player2_coins)))
+    .catch((error) => console.log(error));
+
+    fetch('http://localhost:3001/api/get_total_wins/')
+    .then((resp) => resp.json())
+    .then((resp) => (setInnitialCar1Win(resp[0]?.player1_win), setInnitialCar2Win(resp[0]?.player2_win)))
+    .catch((error) => console.log(error));
 
   const [xoffset, setXoffset] = useState(0);
   const [yoffset, setYoffset] = useState(0);
