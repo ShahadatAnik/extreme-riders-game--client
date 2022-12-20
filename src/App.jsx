@@ -74,8 +74,22 @@ function App() {
   const [time_pause, setTime_pause] = useState(false);
   const [Game_over, setGame_over] = useState(false);
   const [timeToPlay, setTimeToPlay] = useState(2);
-  const [alert_show, setAlert_show] = useState(false);
+  const [alert_show, setAlert_show] = useState(0);
   const [alert_message, setAlert_message] = useState(" ");
+
+  if(initialCar1Win!= undefined){
+    if(count==0 ){
+    setInnitialCar1Win(initialCar1Win)
+    console.log(initialCar1Win)
+    }
+  }
+
+  if(initialCar2Win!= undefined){
+    if(count2==0 ){
+    setInnitialCar2Win(initialCar2Win)
+    console.log(initialCar2Win)
+    }
+  }
 
   if(initialXoffset!= undefined){
     if(count==0 ){
@@ -243,18 +257,24 @@ function App() {
       setTime_pause(true)
       if (car_1_point > car_2_point){
         console.log("car 1 Winner")
-        setAlert_show(true)
+        setAlert_show(1)
         setAlert_message("Car 1 Winner")
+        setInnitialCar1Win(initialCar1Win+1)
+        console.log(initialCar1Win)
+        update_total_win()
       }
       else if (car_1_point == car_2_point){
         console.log("Draw")
-        setAlert_show(true)
+        setAlert_show(1)
         setAlert_message("Draw")
       }
       else{
         console.log("Car 2 Winner")
-        setAlert_show(true)
+        setAlert_show(1)
         setAlert_message("Car 2 Winner")
+        setInnitialCar2Win(initialCar2Win+1)
+        console.log(initialCar2Win)
+        update_total_win()
       }
     }
   }, [time_second, time_minute, time_pause]);
@@ -273,8 +293,15 @@ function App() {
     });
   };
 
+  const update_total_win = () =>{
+    Axios.post("http://localhost:3001/api/update_total_wins/", {
+      player1_win: initialCar1Win,
+      player2_win: initialCar2Win,
+    });
+  };
+
   const reset = () =>{
-    setAlert_show(false)
+    setAlert_show(0)
     setGame_over(false)
     setTime_pause(false)
     setTime_minute(0)
