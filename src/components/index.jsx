@@ -19,6 +19,7 @@ import {
   Center,
   Button,
   Image,
+  Stack,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
@@ -511,23 +512,93 @@ function Index() {
         >
           <AlertDialogOverlay>
             <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              <AlertDialogHeader
+                fontSize="4xl"
+                fontWeight="bold"
+                color="red.500"
+              >
                 <Center>Game Over</Center>
               </AlertDialogHeader>
-              <AlertDialogBody>
-                <Center>{alert_message}</Center>
+              <AlertDialogBody marginBottom={8}>
+                <Center>
+                  <Text fontSize="3xl" fontWeight="bold" color="gray.500">
+                    {alert_message}
+                  </Text>
+                </Center>
               </AlertDialogBody>
-              <AlertDialogFooter>
+              <Stack direction="row" spacing={4} p={4}>
                 <Button
                   onClick={e => (window.location.href = '/info')}
                   colorScheme="green"
+                  sx={{
+                    backgroundImage:
+                      'linear-gradient(315deg,#559e0b  0%, #0cf054 74%)',
+                    backgroundSize: '400% 400%',
+                    animation: 'gradient 2s ease infinite',
+                    '@keyframes gradient': {
+                      '0%': {
+                        backgroundPosition: '0% 50%',
+                      },
+                      '50%': {
+                        backgroundPosition: '100% 50%',
+                      },
+                      '100%': {
+                        backgroundPosition: '0% 50%',
+                      },
+                    },
+                  }}
                 >
                   Info
                 </Button>
-                <Button onClick={e => reset()} colorScheme="red">
+                <Spacer />
+                <Button
+                  onClick={e => (window.location.href = '/chat')}
+                  colorScheme="yellow"
+                  sx={{
+                    backgroundImage:
+                      'linear-gradient(315deg, #eb9234 0%, #ebe134 74%)',
+                    backgroundSize: '400% 400%',
+                    animation: 'gradient 2s ease infinite',
+                    '@keyframes gradient': {
+                      '0%': {
+                        backgroundPosition: '0% 50%',
+                      },
+                      '50%': {
+                        backgroundPosition: '100% 50%',
+                      },
+                      '100%': {
+                        backgroundPosition: '0% 50%',
+                      },
+                    },
+                  }}
+                >
+                  Chat
+                </Button>
+                <Spacer />
+                <Button
+                  onClick={e => reset()}
+                  colorScheme="red"
+                  sx={{
+                    backgroundImage:
+                      'linear-gradient(315deg, #eb3471 0%, #8f0404 74%)',
+                    backgroundSize: '400% 400%',
+                    animation: 'gradient 2s ease infinite',
+                    '@keyframes gradient': {
+                      '0%': {
+                        backgroundPosition: '0% 50%',
+                      },
+                      '50%': {
+                        backgroundPosition: '100% 50%',
+                      },
+                      '100%': {
+                        backgroundPosition: '0% 50%',
+                      },
+                    },
+                  }}
+                >
                   Reset
                 </Button>
-              </AlertDialogFooter>
+              </Stack>
             </AlertDialogContent>
           </AlertDialogOverlay>
         </AlertDialog>

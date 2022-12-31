@@ -8,10 +8,11 @@ import { Suspense } from 'react';
 import Info from './components/info';
 import { Loader } from './theme/Loader';
 import NotFoundPage from './utill/NotFoundPage';
+import Chat from './components/chatTemplate';
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <ColorModeSwitcher
+      {/* <ColorModeSwitcher
         justifySelf="flex-end"
         sx={{
           position: 'fixed',
@@ -19,7 +20,7 @@ function App() {
           right: '1rem',
           zIndex: '9999',
         }}
-      />
+      /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -36,6 +37,14 @@ function App() {
             element={
               <Suspense fallback={<Loader />}>
                 <Info />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Chat />
               </Suspense>
             }
           />
