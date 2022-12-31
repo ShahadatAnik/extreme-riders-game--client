@@ -1,8 +1,10 @@
 import {
-  ChakraProvider,
-  AlertTitle,
-  AlertDescription,
-  Container,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
   Alert,
   AlertDialogFooter,
   AlertDialogHeader,
@@ -345,19 +347,19 @@ function Index() {
     setCar_2_point(0);
   };
 
-const total_coin = () => {
+  const total_coin = () => {
     Axios.get('http://localhost:3001/api/get_total_coin').then(response => {
       setCar1_total_coin(response.data[0].player1_coin);
       setCar2_total_coin(response.data[0].player2_coin);
     });
-  }
+  };
 
   const total_win = () => {
     Axios.get('http://localhost:3001/api/get_total_win').then(response => {
       setCar1_Total_win(response.data[0].player1_win);
       setCar2_Total_win(response.data[0].player2_win);
     });
-  }
+  };
 
   return (
     <Box
@@ -536,9 +538,80 @@ const total_coin = () => {
                 color="red.500"
               >
                 <Center>Game Over</Center>
+                {total_coin()}
+                {total_win()}
               </AlertDialogHeader>
               <AlertDialogBody>
-                <Center>{alert_message}</Center>
+                <Center>
+                  <Text
+                    fontSize="2xl"
+                    fontWeight="bold"
+                    color="gray.500"
+                    marginBottom={8}
+                  >
+                    {alert_message}
+                  </Text>
+                </Center>
+                {/* a 3 by 3 table without border */}
+                <Table variant="simple" color={'white'}>
+                  <Thead>
+                    <Tr>
+                      <Th></Th>
+                      <Th>Wins</Th>
+                      <Th>Coins</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    <Tr
+                      rounded={'md'}
+                      sx={{
+                        backgroundImage:
+                          'linear-gradient(315deg, #f83656 0%, #f8a561 74%)',
+                        backgroundSize: '400% 400%',
+                        animation: 'gradient 5s ease infinite',
+                        '@keyframes gradient': {
+                          '0%': {
+                            backgroundPosition: '0% 50%',
+                          },
+                          '50%': {
+                            backgroundPosition: '100% 50%',
+                          },
+                          '100%': {
+                            backgroundPosition: '0% 50%',
+                          },
+                        },
+                      }}
+                    >
+                      <Td>Red Car</Td>
+                      <Td>{car1_Total_win}</Td>
+                      <Td>{car1_total_coin}</Td>
+                    </Tr>
+                    <Tr
+                      bgGradient="linear(to-r, #1e3c72, #2a5298)"
+                      sx={{
+                        backgroundImage:
+                          'linear-gradient(90deg, #1e3c72, #2a5298)',
+                        backgroundSize: '400% 400%',
+                        animation: 'gradient 5s ease infinite',
+                        '@keyframes gradient': {
+                          '0%': {
+                            backgroundPosition: '0% 50%',
+                          },
+                          '50%': {
+                            backgroundPosition: '100% 50%',
+                          },
+                          '100%': {
+                            backgroundPosition: '0% 50%',
+                          },
+                        },
+                      }}
+                    >
+                      <Td>Blue Car</Td>
+                      <Td>{car2_Total_win}</Td>
+                      <Td>{car2_total_coin}</Td>
+                    </Tr>
+                  </Tbody>
+                </Table>
               </AlertDialogBody>
               <Stack direction="row" spacing={4} p={4}>
                 <Button
