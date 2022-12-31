@@ -151,15 +151,11 @@ function Index() {
   }
 
   useEffect(() => {
-    for (var x = 0; x < 200; x = x + 1) {
-      for (var y = 0; y < 200; y = y + 1) {
-        if (xoffset + x == coin_x && yoffset + y == coin_y) {
+        if ((xoffset+200 >= coin_x && xoffset <= coin_x)  && (yoffset + 200 >=coin_y && yoffset <= coin_y)){
           setCoin_x(Math.floor(Math.random() * (window.innerWidth - 150)));
           setCoin_y(Math.floor(Math.random() * (window.innerHeight - 150)));
           setCar_1_point(car_1_point + 1);
-        }
       }
-    }
 
     //console.log(car1_axis)
     const handleCar1 = event => {
@@ -214,14 +210,10 @@ function Index() {
   }, [xoffset, yoffset, Game_over]);
 
   useEffect(() => {
-    for (var x = 0; x < 200; x = x + 1) {
-      for (var y = 0; y < 200; y = y + 1) {
-        if (xoffset2 + x == coin_x && yoffset2 + y == coin_y) {
+        if ((xoffset2+200 >= coin_x && xoffset2 <= coin_x)  && (yoffset2 + 200 >=coin_y && yoffset2 <= coin_y)) {
           setCoin_x(Math.floor(Math.random() * (window.innerWidth - 150)));
           setCoin_y(Math.floor(Math.random() * (window.innerHeight - 150)));
           setCar_2_point(car_2_point + 1);
-        }
-      }
     }
 
     const handleCar2 = event => {
@@ -275,7 +267,7 @@ function Index() {
     if (time_pause === false) {
       setTimeout(() => {
         setTime_second(time_second + 1);
-      }, 100);
+      }, 1000);
       if (time_second === 60) {
         setTime_minute(time_minute + 1);
         setTime_second(0);
