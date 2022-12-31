@@ -112,6 +112,10 @@ function Index() {
   const [timeToPlay, setTimeToPlay] = useState(1);
   const [alert_show, setAlert_show] = useState(false);
   const [alert_message, setAlert_message] = useState('');
+  const [car1_total_coin, setCar1_total_coin] = useState(0);
+  const [car2_total_coin, setCar2_total_coin] = useState(0);
+  const [car1_Total_win, setCar1_Total_win] = useState(0);
+  const [car2_Total_win, setCar2_Total_win] = useState(0);
 
   if (initialCar1Win != undefined) {
     if (count == 0) {
@@ -340,6 +344,20 @@ function Index() {
     setCar_2_point(0);
   };
 
+const total_coin = () => {
+    Axios.get('http://localhost:3001/api/get_total_coin').then(response => {
+      setCar1_total_coin(response.data[0].player1_coin);
+      setCar2_total_coin(response.data[0].player2_coin);
+    });
+  }
+
+  const total_win = () => {
+    Axios.get('http://localhost:3001/api/get_total_win').then(response => {
+      setCar1_Total_win(response.data[0].player1_win);
+      setCar2_Total_win(response.data[0].player2_win);
+    });
+  }
+
   return (
     <Box
       sx={{
@@ -515,14 +533,18 @@ function Index() {
                 <Center>Game Over</Center>
               </AlertDialogHeader>
               <AlertDialogBody>
+                {total_coin()}
+                {total_win()}
                 <Center>{alert_message}</Center>
+                <Center>Player 1 Coin: {car1_total_coin} | Player 2 Coin: {car2_total_coin} </Center>
+                <Center>Player 1 total win: {car1_Total_win} | Player 2 total win: : {car2_Total_win}</Center>
               </AlertDialogBody>
               <AlertDialogFooter>
                 <Button
                   onClick={e => (window.location.href = '/info')}
                   colorScheme="green"
                 >
-                  Info
+                  Transfer Coin
                 </Button>
                 <Button onClick={e => reset()} colorScheme="red">
                   Reset
