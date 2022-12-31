@@ -113,6 +113,10 @@ function Index() {
   const [timeToPlay, setTimeToPlay] = useState(1);
   const [alert_show, setAlert_show] = useState(false);
   const [alert_message, setAlert_message] = useState('');
+  const [car1_total_coin, setCar1_total_coin] = useState(0);
+  const [car2_total_coin, setCar2_total_coin] = useState(0);
+  const [car1_Total_win, setCar1_Total_win] = useState(0);
+  const [car2_Total_win, setCar2_Total_win] = useState(0);
 
   if (initialCar1Win != undefined) {
     if (count == 0) {
@@ -341,6 +345,20 @@ function Index() {
     setCar_2_point(0);
   };
 
+const total_coin = () => {
+    Axios.get('http://localhost:3001/api/get_total_coin').then(response => {
+      setCar1_total_coin(response.data[0].player1_coin);
+      setCar2_total_coin(response.data[0].player2_coin);
+    });
+  }
+
+  const total_win = () => {
+    Axios.get('http://localhost:3001/api/get_total_win').then(response => {
+      setCar1_Total_win(response.data[0].player1_win);
+      setCar2_Total_win(response.data[0].player2_win);
+    });
+  }
+
   return (
     <Box
       sx={{
@@ -519,12 +537,8 @@ function Index() {
               >
                 <Center>Game Over</Center>
               </AlertDialogHeader>
-              <AlertDialogBody marginBottom={8}>
-                <Center>
-                  <Text fontSize="3xl" fontWeight="bold" color="gray.500">
-                    {alert_message}
-                  </Text>
-                </Center>
+              <AlertDialogBody>
+                <Center>{alert_message}</Center>
               </AlertDialogBody>
               <Stack direction="row" spacing={4} p={4}>
                 <Button
@@ -548,7 +562,7 @@ function Index() {
                     },
                   }}
                 >
-                  Info
+                  Transfer Coin
                 </Button>
                 <Spacer />
                 <Button
