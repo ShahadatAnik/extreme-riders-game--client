@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import {
   Box,
   Stack,
-  Text,
   Container,
   Input,
   IconButton,
@@ -146,11 +145,23 @@ export default function Chat() {
                 <Tag size="lg" colorScheme="red" borderRadius="full">
                   <Avatar size="xs" name="Red Car" ml={-2} mr={2} />
                   <TagLabel>{val.message}</TagLabel>
+                  <Spacer />
+                  <TagLabel fontSize="xs" color="gray.500">
+                    {val.time.split('T')[1].split('.')[0].split(':')[0] +
+                      ':' +
+                      val.time.split('T')[1].split('.')[0].split(':')[1]}
+                  </TagLabel>
                 </Tag>
               ) : (
                 <Tag size="lg" colorScheme="blue" borderRadius="full">
                   <Avatar size="xs" name="Blue Car" ml={-2} mr={2} />
                   <TagLabel>{val.message}</TagLabel>
+                  <Spacer />
+                  <TagLabel fontSize="xs" color="gray.500">
+                    {val.time.split('T')[1].split('.')[0].split(':')[0] +
+                      ':' +
+                      val.time.split('T')[1].split('.')[0].split(':')[1]}
+                  </TagLabel>
                 </Tag>
               )}
             </Stack>
