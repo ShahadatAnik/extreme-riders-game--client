@@ -42,3 +42,8 @@ Fork the repository
 Create a new branch for your feature
 Commit your changes
 Open a pull request
+
+Screenshots: 
+![Alt text](1.png?raw=true "Optional Title")
+![Alt text](2.png?raw=true "Optional Title")
+![Alt text](3.png?raw=true "Optional Title")
